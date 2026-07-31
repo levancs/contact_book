@@ -1,13 +1,14 @@
 import psycopg
+from dotenv import load_dotenv
+import os
 
-connection = psycopg.connect(
-    dbname="contact_book_db",
-    user="postgres",
-    password="Work123Elikashvili123*",
-    host="localhost",
-    port=5432
+load_dotenv()
+
+def get_connection():
+    return psycopg.connect(
+    dbname=os.getenv("DB_NAME"),
+    user=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASSWORD"),
+    host=os.getenv("DB_HOST"),
+    port=os.getenv("DB_PORT")
 )
-
-print("Connection Successful")
-
-connection.close()
