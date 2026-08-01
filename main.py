@@ -11,6 +11,20 @@ def show_menu():
     )
 
 
+def display_contacts():
+    contacts = get_contacts()
+    if not contacts:
+        print("\nNo contacts")
+        return False
+    for contact in contacts:
+        print(
+            f"\nID: {contact[0]}"
+            f"\nContact name: {contact[1]}"
+            f"\nContact email: {contact[2]}"
+        )
+    return True
+    
+
 def menu():
     while True:
         show_menu()
@@ -25,29 +39,12 @@ def menu():
 
 
         elif menu_choice == '2':
-            contacts = get_contacts()
-            if not contacts:
-                print("No contacts")
-                continue
-            for contact in contacts:
-                print(
-                    f"\nID: {contact[0]}"
-                    f"\nContact name: {contact[1]}"
-                    f"\nContact email: {contact[2]}"
-                )
+            display_contacts()
 
 
         elif menu_choice == '3':
-            contacts = get_contacts()
-            if not contacts:
-                print("No contacts")
+            if not display_contacts():
                 continue
-            for contact in contacts:
-               print(
-                    f"\nID: {contact[0]}"
-                    f"\nContact name: {contact[1]}"
-                    f"\nContact email: {contact[2]}"
-                ) 
             contact_id = int(input("\nEnter contact ID you want to update here: "))
             print(
                 "\nEnter 1 to update contact name"
@@ -73,7 +70,7 @@ def menu():
         elif menu_choice == '4':
             contacts = get_contacts()
             if not contacts:
-                print("No contacts")
+                print("\nNo contacts")
                 continue
             for contact in contacts:
                 print(
@@ -83,7 +80,7 @@ def menu():
                 )
             contact_id = input("\nEnter contact ID you want to delete here: ")
             delete_contact(contact_id)
-            print("Contact deleted")
+            print("\nContact deleted")
             
         elif menu_choice == '5':
             print("\nQuitting")
