@@ -1,15 +1,33 @@
 from database import get_connection
+import psycopg.errors
+
+
+def validate_contact(name, email):
+    if not name.strip():
+        return False
+    if not email.strip():
+        return False
+    return True
+
 
 def add_contact(name, email):
-    with get_connection() as connection:
-        with connection.cursor() as cursor:
-            cursor.execute(
-                    """
-                    INSERT INTO contacts(name, email)
-                    VALUES (%s, %s)
-                    """,
-                    (name, email)
-                )
+    if not validate_contact(name, email):
+        return "invalid_input"
+    try:
+        with get_connection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                        """
+                        INSERT INTO contacts(name, email)
+                        VALUES (%s, %s)
+                        """,
+                        (name, email)
+                    )
+    except psycopg.errors.UniqueViolation:
+        return "duplicate_email"
+    except psycopg.errors.NotNullViolation:
+        return "missing_required_field"
+    return "success"
 
 
 def get_contacts():

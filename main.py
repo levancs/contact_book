@@ -1,6 +1,5 @@
 from contacts import *
 
-
 def show_menu():
     print(
         "\nEnter 1 to add contact"
@@ -34,8 +33,17 @@ def menu():
         if menu_choice == '1':
             name = input("\nEnter name here: ")
             email = input("Enter email here: ")
-            add_contact(name, email)
-            print("\nContact added")
+            name = name.strip()
+            email = email.strip()
+            result = add_contact(name, email)
+            if result == "success":
+                print("\nContact Added")
+            elif result == "invalid_input":
+                print("\nName and email cannot be empty")
+            elif result == "missing_required_field":
+                print("\nName and email are required")
+            elif result == "duplicate_email":
+                print("\nEmail already exists")
 
 
         elif menu_choice == '2':
