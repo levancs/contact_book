@@ -1,13 +1,6 @@
 from database import get_connection
 import psycopg.errors
-
-
-def validate_text(text):
-    if not isinstance(text, str):
-        return False
-    if not text.strip():
-        return False
-    return True
+from utils import validate_text
 
 
 def add_contact(name, email):
@@ -60,7 +53,7 @@ def update_contact_name(contact_id, new_name):
                 (new_name, contact_id)
             )
             if cursor.rowcount == 0:
-                return "not_found"
+                return "contact_not_found"
             return "success"
 
 
@@ -80,7 +73,7 @@ def update_contact_email(contact_id, new_email):
                     (new_email, contact_id)
                 )
                 if cursor.rowcount == 0:
-                    return "not_found"
+                    return "contact_not_found"
     except psycopg.errors.UniqueViolation:
         return "duplicate_email"
     return "success"
@@ -105,7 +98,7 @@ def update_contact_name_email(contact_id, new_name, new_email):
                     (new_name, new_email, contact_id)
                 )
                 if cursor.rowcount == 0:
-                    return "not_found"
+                    return "contact_not_found"
     except psycopg.errors.UniqueViolation:
         return "duplicate_email"
     return "success"
@@ -122,5 +115,5 @@ def delete_contact(contact_id):
                 (contact_id,)
             )
             if cursor.rowcount == 0:
-                return "not_found"
+                return "contact_not_found"
             return "success"
