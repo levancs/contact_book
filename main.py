@@ -1,6 +1,5 @@
 from contacts import (
     add_contact,
-    get_contacts,
     update_contact_name,
     update_contact_email,
     update_contact_name_email,
@@ -10,72 +9,21 @@ from contacts import (
 
 from phone_numbers import (
     add_phone_number,
-    get_phone_numbers,
     update_phone_number,
     delete_phone_number
 )
 
 
-from utils import (
-    validate_integer
+from ui import (
+    show_menu,
+    display_contacts,    
+    display_phone_numbers,
+    handle_result
 )
 
-def show_menu():
 
-    print(
-        "\nEnter 1 to add contact"
-        "\nEnter 2 to show contacts"
-        "\nEnter 3 to update contact"
-        "\nEnter 4 to delete contact"
-        "\nEnter 5 to add phone number"
-        "\nEnter 6 to show phone numbers"
-        "\nEnter 7 to update phone number"
-        "\nEnter 8 to delete phone number"
-        "\nEnter 9 to exit program"
-    )
+from utils import parse_integer
 
-
-def display_contacts():
-
-    contacts = get_contacts()
-    if not contacts:
-        print("\nNo contacts")
-        return False
-    for contact in contacts:
-        print(
-            f"\nID: {contact[0]}"
-            f"\nContact name: {contact[1]}"
-            f"\nContact email: {contact[2]}"
-        )
-    return True
-
-def display_phone_numbers(contact_id):
-
-    phone_numbers = get_phone_numbers(contact_id)
-    if not phone_numbers:
-        print("\nNo phone numbers")
-        return False
-    for phone in phone_numbers:
-        print(
-            f"\nID: {phone[0]}"
-            f"\nNumber: {phone[1]}"
-            f"\nType: {phone[2]}"
-        )
-    return True
-
-
-def handle_result(result):
-
-    if result == "success":
-        print("\nSuccess")
-    elif result == "invalid_input":
-        print("\nInput cannot be empty")
-    elif result == "duplicate_email":
-        print("\nEmail already exists")
-    elif result == "contact_not_found":
-        print("\nContact wasn't found")
-    elif result == "phone_number_not_found":
-        print("\nPhone number wasn't found")
 
 
 def menu():
@@ -107,10 +55,10 @@ def menu():
                 continue
 
             contact_id = input("\nEnter contact ID you want to update here: ")
-            if not validate_integer(contact_id):
+            contact_id = parse_integer(contact_id)
+            if contact_id is None:
                 print("\nInvalid input")
                 continue
-            contact_id = int(contact_id)
             
             print(
                 "\nEnter 1 to update contact name"
@@ -145,10 +93,10 @@ def menu():
                 continue
 
             contact_id = input("\nEnter contact ID you want to delete here: ")
-            if not validate_integer(contact_id):
+            contact_id = parse_integer(contact_id)
+            if contact_id is None:
                 print("Invalid input")
                 continue
-            contact_id = int(contact_id)
 
             result = delete_contact(contact_id)
             handle_result(result)
@@ -160,10 +108,10 @@ def menu():
                 continue
     
             contact_id = input("\nEnter contact ID you want to add a phone number to here: ")
-            if not validate_integer(contact_id):
+            contact_id = parse_integer(contact_id)
+            if contact_id is None:
                 print("Invalid input")
                 continue
-            contact_id = int(contact_id)
 
             phone_number = input("\nEnter phone number here: ")
             phone_type = input("Enter phone type here: ")
@@ -177,10 +125,10 @@ def menu():
                 continue
 
             contact_id = input("\nEnter contact ID to view phone numbers for here: ")
-            if not validate_integer(contact_id):
+            contact_id = parse_integer(contact_id)
+            if contact_id is None:
                 print("Invalid input")
                 continue
-            contact_id = int(contact_id)
 
             if not display_phone_numbers(contact_id):
                 continue
@@ -192,19 +140,19 @@ def menu():
                 continue
 
             contact_id = input("\nEnter contact ID to update phone number for here: ")
-            if not validate_integer(contact_id):
+            contact_id = parse_integer(contact_id)
+            if contact_id is None:
                 print("Invalid input")
                 continue
-            contact_id = int(contact_id)
 
             if not display_phone_numbers(contact_id):
                 continue
 
             phone_id = input("\nEnter phone ID to update here: ")
-            if not validate_integer(phone_id):
+            phone_id = parse_integer(phone_id)
+            if phone_id is None:
                 print("Invalid input")
-                continue
-            phone_id = int(phone_id)    
+                continue    
 
             new_number = input("\nEnter new phone number here: ")
             new_phone_type = input("Enter new phone type here: ")
@@ -218,24 +166,24 @@ def menu():
                 continue
 
             contact_id = input("\nEnter contact ID to delete phone number for here: ")
-            if not validate_integer(contact_id):
+            contact_id = parse_integer(contact_id)
+            if contact_id is None:
                 print("Invalid input")
                 continue
-            contact_id = int(contact_id)
 
             if not display_phone_numbers(contact_id):
                 continue
 
             phone_id = input("\nEnter phone ID to delete here: ")
-            if not validate_integer(phone_id):
+            phone_id = parse_integer(phone_id)
+            if phone_id is None:
                 print("Invalid input")
                 continue
-            phone_id = int(phone_id)
 
             result = delete_phone_number(phone_id)
             handle_result(result)
 
-            
+
         elif menu_choice == '9':
             
             print("\nQuitting")

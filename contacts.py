@@ -1,15 +1,13 @@
 from database import get_connection
 import psycopg.errors
-from utils import validate_text
+from utils import normalize_text
 
 
 def add_contact(name, email):
-    name = name.strip()
-    email = email.strip()
-    if not validate_text(name):
-        return "invalid_input"
-    if not validate_text(email):
-        return "invalid_input"
+    name = normalize_text(name)
+    email = normalize_text(email)
+    if name is None or email is None:
+        return "invalid_input"  
     try:
         with get_connection() as connection:
             with connection.cursor() as cursor:
@@ -39,8 +37,8 @@ def get_contacts():
   
 
 def update_contact_name(contact_id, new_name):
-    new_name = new_name.strip()
-    if not validate_text(new_name):
+    new_name = normalize_text(new_name)
+    if new_name is None:
         return "invalid_input"
     with get_connection() as connection:
         with connection.cursor() as cursor:
@@ -58,8 +56,8 @@ def update_contact_name(contact_id, new_name):
 
 
 def update_contact_email(contact_id, new_email):
-    new_email = new_email.strip()
-    if not validate_text(new_email):
+    new_email = normalize_text(new_email)
+    if new_email is None:
         return "invalid_input"
     try:
         with get_connection() as connection:
@@ -80,11 +78,9 @@ def update_contact_email(contact_id, new_email):
 
 
 def update_contact_name_email(contact_id, new_name, new_email):
-    new_name = new_name.strip()
-    new_email = new_email.strip()
-    if not validate_text(new_name):
-        return "invalid_input"
-    if not validate_text(new_email):
+    new_name = normalize_text(new_name)
+    new_email = normalize_text(new_email)
+    if new_name is None or new_email is None:
         return "invalid_input"
     try:
         with get_connection() as connection:

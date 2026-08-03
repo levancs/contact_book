@@ -1,14 +1,12 @@
-def validate_text(text):
+def normalize_text(text):
     if not isinstance(text, str):
-        return False
-    if not text.strip():
-        return False
-    return True
+        return None
+    text = text.strip()
+    return text if text else None
 
 
-def validate_integer(value):
+def parse_integer(value):
     try:
-        int(value)
-        return True
+        return int(value)
     except (ValueError, TypeError):
-        return False
+        return None

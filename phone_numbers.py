@@ -1,14 +1,12 @@
 from database import get_connection
 import psycopg.errors
-from utils import validate_text
+from utils import normalize_text
 
 
 def add_phone_number(contact_id, number, phone_type):
-    number = number.strip()
-    phone_type = phone_type.strip()
-    if not validate_text(number):
-        return "invalid_input"
-    if not validate_text(phone_type):
+    number = normalize_text(number)
+    phone_type = normalize_text(phone_type)
+    if number is None or phone_type is None:
         return "invalid_input"
     try:
         with get_connection() as connection:
@@ -41,11 +39,9 @@ def get_phone_numbers(contact_id):
 
 
 def update_phone_number(phone_id, new_number, new_phone_type):
-    new_number = new_number.strip()
-    new_phone_type = new_phone_type.strip()
-    if not validate_text(new_number):
-        return "invalid_input"
-    if not validate_text(new_phone_type):
+    new_number = normalize_text(new_number)
+    new_phone_type = normalize_text(new_phone_type)
+    if new_number is None or new_phone_type is None:
         return "invalid_input"
     with get_connection() as connection:
         with connection.cursor() as cursor:
