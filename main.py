@@ -10,6 +10,9 @@ from phone_numbers import (
     update_phone_number,
     delete_phone_number
 )
+from tags import (
+    add_tag
+)
 from ui import (
     show_menu,
     display_contacts,    
@@ -25,7 +28,7 @@ def menu():
 
         show_menu()
         menu_choice = input("\nEnter here: ")
-        if menu_choice not in ('1', '2', '3', '4', '5', '6', '7', '8', '9'):
+        if menu_choice not in ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10'):
             print("\nInvalid menu input")
             continue
 
@@ -162,6 +165,13 @@ def menu():
 
 
         elif menu_choice == '9':
+
+            tag_name = input("\nEnter a name for a new tag: ")
+            result = add_tag(tag_name)
+            handle_result(result)
+
+
+        elif menu_choice == '10':
             
             print("\nQuitting")
             break
