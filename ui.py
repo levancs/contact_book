@@ -1,5 +1,6 @@
 from contacts import get_contacts
 from phone_numbers import get_phone_numbers
+from utils import parse_integer
 
 
 def show_menu():
@@ -58,3 +59,13 @@ def handle_result(result):
     }
 
     print(f"\n{messages.get(result, 'Unknown error')}")
+
+
+def get_id_input(prompt):
+    value = input(prompt)
+
+    if not parse_integer(value):
+        print("\nInvalid ID")
+        return None
+
+    return int(value)

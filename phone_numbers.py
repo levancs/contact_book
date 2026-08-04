@@ -1,5 +1,5 @@
-from database import get_connection
 import psycopg.errors
+from database import get_connection
 from utils import normalize_text
 
 
