@@ -1,5 +1,6 @@
 from contacts import get_contacts
 from phone_numbers import get_phone_numbers
+from tags import get_tags
 from utils import parse_integer
 
 
@@ -15,7 +16,8 @@ def show_menu():
         "\nEnter 7 to update phone number"
         "\nEnter 8 to delete phone number"
         "\nEnter 9 to add tag"
-        "\nEnter 10 to exit program"
+        "\nEnter 10 to show tags"
+        "\nEnter 11 to exit program"
     )
 
 
@@ -45,6 +47,20 @@ def display_phone_numbers(contact_id):
             f"\nID: {phone[0]}"
             f"\nNumber: {phone[1]}"
             f"\nType: {phone[2]}"
+        )
+    return True
+
+
+def display_tags():
+
+    tags = get_tags()
+    if not tags:
+        print("\nNo tags")
+        return False
+    for tag in tags:
+        print(
+            f"\nID: {tag[0]}"
+            f"\nName: {tag[1]}"
         )
     return True
 

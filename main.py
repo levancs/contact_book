@@ -17,6 +17,7 @@ from ui import (
     show_menu,
     display_contacts,    
     display_phone_numbers,
+    display_tags,
     handle_result,
     get_id_input
 )
@@ -28,7 +29,7 @@ def menu():
 
         show_menu()
         menu_choice = input("\nEnter here: ")
-        if menu_choice not in ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10'):
+        if menu_choice not in ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'):
             print("\nInvalid menu input")
             continue
 
@@ -172,6 +173,11 @@ def menu():
 
 
         elif menu_choice == '10':
+
+            display_tags()
+
+
+        elif menu_choice == '11':
             
             print("\nQuitting")
             break

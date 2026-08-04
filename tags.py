@@ -20,3 +20,15 @@ def add_tag(name):
     except psycopg.errors.UniqueViolation:
         return "duplicate_tag"
     return "success"     
+
+def get_tags():
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute (
+                """
+                SELECT tag_id, name
+                FROM tags
+                """
+            )
+            tags = cursor.fetchall()
+            return tags
