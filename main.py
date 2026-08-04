@@ -5,15 +5,11 @@ from contacts import (
     update_contact_name_email,
     delete_contact
 )
-
-
 from phone_numbers import (
     add_phone_number,
     update_phone_number,
     delete_phone_number
 )
-
-
 from ui import (
     show_menu,
     display_contacts,    
@@ -21,10 +17,6 @@ from ui import (
     handle_result,
     get_id_input
 )
-
-
-from utils import parse_integer
-
 
 
 def menu():
@@ -44,6 +36,7 @@ def menu():
             email = input("Enter email here: ")
             result = add_contact(name, email)
             handle_result(result)
+
 
         elif menu_choice == '2':
 
@@ -123,8 +116,7 @@ def menu():
             if contact_id is None:
                 continue
 
-            if not display_phone_numbers(contact_id):
-                continue
+            display_phone_numbers(contact_id)
 
 
         elif menu_choice == '7':

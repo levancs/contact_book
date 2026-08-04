@@ -53,9 +53,7 @@ def update_phone_number(phone_id, new_number, new_phone_type):
                 """,
                 (new_number, new_phone_type, phone_id)
             )
-            if cursor.rowcount == 0:
-                return "phone_number_not_found"
-            return "success"
+            return "phone_number_not_found" if cursor.rowcount == 0 else "success"
 
 
 def delete_phone_number(phone_id):
@@ -68,6 +66,4 @@ def delete_phone_number(phone_id):
                 """,
                 (phone_id,)
             )
-            if cursor.rowcount == 0:
-                return "phone_number_not_found"
-            return "success"
+            return "phone_number_not_found" if cursor.rowcount == 0 else "success"

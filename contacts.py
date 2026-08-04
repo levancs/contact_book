@@ -1,5 +1,5 @@
-from database import get_connection
 import psycopg.errors
+from database import get_connection
 from utils import normalize_text
 
 
@@ -50,9 +50,7 @@ def update_contact_name(contact_id, new_name):
                 """,
                 (new_name, contact_id)
             )
-            if cursor.rowcount == 0:
-                return "contact_not_found"
-            return "success"
+            return "contact_not_found" if cursor.rowcount == 0 else "success"
 
 
 def update_contact_email(contact_id, new_email):
@@ -70,11 +68,10 @@ def update_contact_email(contact_id, new_email):
                     """,
                     (new_email, contact_id)
                 )
-                if cursor.rowcount == 0:
-                    return "contact_not_found"
+                rowcount = cursor.rowcount
     except psycopg.errors.UniqueViolation:
         return "duplicate_email"
-    return "success"
+    return "contact_not_found" if rowcount == 0 else "success"
 
 
 def update_contact_name_email(contact_id, new_name, new_email):
@@ -93,11 +90,10 @@ def update_contact_name_email(contact_id, new_name, new_email):
                     """,
                     (new_name, new_email, contact_id)
                 )
-                if cursor.rowcount == 0:
-                    return "contact_not_found"
+                rowcount = cursor.rowcount
     except psycopg.errors.UniqueViolation:
         return "duplicate_email"
-    return "success"
+    return "contact_not_found" if rowcount == 0 else "success"
 
 
 def delete_contact(contact_id):
@@ -110,6 +106,4 @@ def delete_contact(contact_id):
                 """,
                 (contact_id,)
             )
-            if cursor.rowcount == 0:
-                return "contact_not_found"
-            return "success"
+            return "contact_not_found" if cursor.rowcount == 0 else "success"
