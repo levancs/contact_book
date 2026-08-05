@@ -51,3 +51,16 @@ def assign_tag(contact_id, tag_id):
     except psycopg.errors.UniqueViolation:
         return "tag_already_assigned"
     return "success"
+
+
+def delete_tag(tag_id):
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute (
+                """
+                DELETE FROM tags
+                WHERE tag_id = %s
+                """,
+                (tag_id,)
+            )
+            return "tag_not_found" if cursor.rowcount == 0 else "success"
