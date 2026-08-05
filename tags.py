@@ -64,3 +64,16 @@ def delete_tag(tag_id):
                 (tag_id,)
             )
             return "tag_not_found" if cursor.rowcount == 0 else "success"
+
+
+def delete_tag_from_contact(contact_id, tag_id):
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute (
+                """
+                DELETE FROM contact_tags
+                WHERE contact_id = %s AND tag_id = %s
+                """,
+                (contact_id, tag_id)
+            )
+            return "contact_or_tag_not_found" if cursor.rowcount == 0 else "success"

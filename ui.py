@@ -19,7 +19,8 @@ def show_menu():
         "\nEnter 10 to show tags"
         "\nEnter 11 to assign tag"
         "\nEnter 12 to delete tag"
-        "\nEnter 13 to exit program"
+        "\nEnter 13 to delete tag from contact"
+        "\nEnter 14 to exit program"
     )
 
 
