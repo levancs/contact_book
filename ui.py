@@ -4,23 +4,47 @@ from tags import get_tags
 from utils import parse_integer
 
 
-def show_menu():
+def show_main_menu():
 
     print(
-        "\nEnter 1 to add contact"
-        "\nEnter 2 to show contacts"
-        "\nEnter 3 to update contact"
-        "\nEnter 4 to delete contact"
-        "\nEnter 5 to add phone number"
-        "\nEnter 6 to show phone numbers"
-        "\nEnter 7 to update phone number"
-        "\nEnter 8 to delete phone number"
-        "\nEnter 9 to add tag"
-        "\nEnter 10 to show tags"
-        "\nEnter 11 to assign tag"
-        "\nEnter 12 to delete tag"
-        "\nEnter 13 to delete tag from contact"
-        "\nEnter 14 to exit program"
+        "\n1. Contact options"
+        "\n2. Phone number options"
+        "\n3. Tag options"
+        "\n4. Exit"
+    )
+
+
+def show_contact_menu():
+
+    print(
+        "\n1. Add contact"
+        "\n2. Update contact"
+        "\n3. Delete contact"
+        "\n4. Show contacts"
+        "\n5. Go back"
+    )
+
+
+def show_phone_number_menu():
+
+    print(
+        "\n1. Add phone number"
+        "\n2. Update phone number"
+        "\n3. Delete phone number"
+        "\n4. Show phone numbers by contact"
+        "\n5. Go back"
+    )
+
+
+def show_tag_menu():
+
+    print(
+        "\n1. Add tag"
+        "\n2. Assign tag"
+        "\n3. Delete tag"
+        "\n4. Delete tag from contact"
+        "\n5. Show tags"
+        "\n6. Go back"
     )
 
 
@@ -32,14 +56,14 @@ def display_contacts():
         return False
     for contact in contacts:
         print(
-            f"\nID: {contact[0]}"
+            f"\nContact ID: {contact[0]}"
             f"\nContact name: {contact[1]}"
             f"\nContact email: {contact[2]}"
         )
     return True
 
 
-def display_phone_numbers(contact_id):
+def display_phone_numbers_by_contact(contact_id):
 
     phone_numbers = get_phone_numbers(contact_id)
     if not phone_numbers:
@@ -47,7 +71,7 @@ def display_phone_numbers(contact_id):
         return False
     for phone in phone_numbers:
         print(
-            f"\nID: {phone[0]}"
+            f"\nPhone number ID: {phone[0]}"
             f"\nNumber: {phone[1]}"
             f"\nType: {phone[2]}"
         )
@@ -62,7 +86,7 @@ def display_tags():
         return False
     for tag in tags:
         print(
-            f"\nID: {tag[0]}"
+            f"\nTag ID: {tag[0]}"
             f"\nName: {tag[1]}"
         )
     return True
@@ -73,9 +97,11 @@ def handle_result(result):
     messages = {
         "success": "Success",
         "invalid_input": "Input cannot be empty",
+
         "duplicate_email": "Email already exists",
         "duplicate_tag": "Tag already exists",
         "tag_already_assigned": "Tag already assigned",
+        
         "contact_not_found": "Contact wasn't found",
         "tag_not_found": "Tag wasn't found",
         "contact_or_tag_not_found": "Contact/Tag wasn't found",
@@ -88,7 +114,7 @@ def handle_result(result):
 def get_id_input(prompt):
     value = input(prompt)
 
-    if not parse_integer(value):
+    if parse_integer(value) is None:
         print("\nInvalid ID")
         return None
 

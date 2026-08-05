@@ -17,27 +17,32 @@ from tags import (
     delete_tag_from_contact
 )
 from ui import (
-    show_menu,
+    show_main_menu,
+    show_contact_menu,
+    show_phone_number_menu,
+    show_tag_menu,
     display_contacts,    
-    display_phone_numbers,
+    display_phone_numbers_by_contact,
     display_tags,
     handle_result,
     get_id_input
 )
 
 
-def menu():
+
+
+def contact_menu():
 
     while True:
 
-        show_menu()
-        menu_choice = input("\nEnter here: ")
-        if menu_choice not in ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14'):
-            print("\nInvalid menu input")
+        show_contact_menu()
+        contact_menu_choice = input("\nEnter here: ")
+        if contact_menu_choice not in ('1', '2', '3', '4', '5'):
+            print("Invalid contact menu input")
             continue
 
 
-        if menu_choice == '1':
+        if contact_menu_choice == '1':
 
             name = input("\nEnter name here: ")
             email = input("Enter email here: ")
@@ -45,13 +50,8 @@ def menu():
             handle_result(result)
 
 
-        elif menu_choice == '2':
-
-            display_contacts()
-
-
-        elif menu_choice == '3':
-
+        elif contact_menu_choice == '2':
+        
             if not display_contacts():
                 continue
 
@@ -60,33 +60,33 @@ def menu():
                 continue
 
             print(
-                "\nEnter 1 to update contact name"
-                "\nEnter 2 to update contact email"
-                "\nEnter 3 to update contact name and email"
+                "\n1. Update contact name"
+                "\n2. Update contact email"
+                "\n3. Update contact name and email"
             )
-            update_choice = input("\nEnter here: ")
-            if update_choice not in ('1', '2', '3'):
-                print("\nInvalid choice input")
+            contact_update_choice = input("\nEnter here: ")
+            if contact_update_choice not in ('1', '2', '3'):
+                print("\nInvalid contact update choice input")
                 continue
 
-            if update_choice == '1':
+            if contact_update_choice == '1':
                 new_name = input("\nEnter new name here: ")
                 result = update_contact_name(contact_id, new_name)
                 handle_result(result)
                 
-            elif update_choice == '2':
+            elif contact_update_choice == '2':
                 new_email = input("\nEnter new email here: ")
                 result = update_contact_email(contact_id, new_email)
                 handle_result(result)
 
-            elif update_choice == '3':
+            elif contact_update_choice == '3':
                 new_name = input("\nEnter new name here: ")
                 new_email = input("Enter new email here: ")
                 result = update_contact_name_email(contact_id, new_name, new_email)
                 handle_result(result)
+        
 
-
-        elif menu_choice == '4':
+        elif contact_menu_choice == '3':
 
             if not display_contacts():
                 continue
@@ -99,7 +99,29 @@ def menu():
             handle_result(result)
 
 
-        elif menu_choice == '5':
+        elif contact_menu_choice == '4':
+
+            display_contacts()
+
+
+        elif contact_menu_choice == '5':
+
+            break
+
+            
+
+            
+def phone_number_menu():
+
+    while True:
+        show_phone_number_menu()
+        phone_number_menu_choice = input("\nEnter here: ")
+        if phone_number_menu_choice not in ('1', '2', '3', '4', '5'):
+            print("\nInvalid phone number menu input")
+            continue
+
+
+        if phone_number_menu_choice == '1':
 
             if not display_contacts():
                 continue
@@ -111,22 +133,10 @@ def menu():
             phone_number = input("\nEnter phone number here: ")
             phone_type = input("Enter phone type here: ")
             result = add_phone_number(contact_id, phone_number, phone_type)
-            handle_result(result) 
+            handle_result(result)
 
 
-        elif menu_choice == '6':
-
-            if not display_contacts():
-                continue
-
-            contact_id = get_id_input("\nEnter contact ID to view phone numbers for here: ")
-            if contact_id is None:
-                continue
-
-            display_phone_numbers(contact_id)
-
-
-        elif menu_choice == '7':
+        elif phone_number_menu_choice == '2': 
 
             if not display_contacts():
                 continue
@@ -135,12 +145,12 @@ def menu():
             if contact_id is None:
                 continue
             
-            if not display_phone_numbers(contact_id):
+            if not display_phone_numbers_by_contact(contact_id):
                 continue
 
             phone_id = get_id_input("\nEnter phone ID to update here: ")
             if phone_id is None:
-                continue    
+                continue  
 
             new_number = input("\nEnter new phone number here: ")
             new_phone_type = input("Enter new phone type here: ")
@@ -148,7 +158,7 @@ def menu():
             handle_result(result)
 
 
-        elif menu_choice == '8':
+        elif phone_number_menu_choice == '3':
 
             if not display_contacts():
                 continue
@@ -157,7 +167,7 @@ def menu():
             if contact_id is None:
                 continue
 
-            if not display_phone_numbers(contact_id):
+            if not display_phone_numbers_by_contact(contact_id):
                 continue
 
             phone_id = get_id_input("\nEnter phone ID to delete here: ")
@@ -168,19 +178,43 @@ def menu():
             handle_result(result)
 
 
-        elif menu_choice == '9':
+        elif phone_number_menu_choice == '4':
+
+            if not display_contacts():
+                continue
+
+            contact_id = get_id_input("\nEnter contact ID to view phone numbers for here: ")
+            if contact_id is None:
+                continue
+
+            display_phone_numbers_by_contact(contact_id)
+
+
+        elif phone_number_menu_choice == '5':
+
+            break
+
+
+
+
+def tag_menu():
+
+    while True:
+        show_tag_menu()
+        tag_menu_choice = input("\nEnter here: ")
+        if tag_menu_choice not in ('1', '2', '3', '4', '5', '6'):
+            print("\nInvalid tag menu choice")
+            continue
+
+
+        if tag_menu_choice == '1':
 
             tag_name = input("\nEnter a name for a new tag: ")
             result = add_tag(tag_name)
             handle_result(result)
 
 
-        elif menu_choice == '10':
-
-            display_tags()
-
-
-        elif menu_choice == '11':
+        elif tag_menu_choice == '2':
 
             if not display_contacts():
                 continue
@@ -200,7 +234,7 @@ def menu():
             handle_result(result)
 
 
-        elif menu_choice == '12':
+        elif tag_menu_choice == '3':
 
             if not display_tags():
                 continue
@@ -213,7 +247,7 @@ def menu():
             handle_result(result)
 
 
-        elif menu_choice == '13':
+        elif tag_menu_choice == '4':
 
             if not display_contacts():
                 continue
@@ -233,10 +267,50 @@ def menu():
             handle_result(result)
 
 
-        elif menu_choice == '14':
-            
+        elif tag_menu_choice == '5':
+
+            display_tags()
+
+
+        elif tag_menu_choice == '6':
+
+            break
+
+
+
+
+def menu():
+
+    while True:
+
+        show_main_menu()
+        main_menu_choice = input("\nEnter here: ")
+        if main_menu_choice not in ('1', '2', '3', '4'):
+            print("\nInvalid main menu input")
+            continue
+
+
+        if main_menu_choice == '1':
+
+            contact_menu()
+
+
+        elif main_menu_choice == '2':
+
+            phone_number_menu()
+
+
+        elif main_menu_choice == '3':
+
+            tag_menu()
+
+
+        elif main_menu_choice == '4':
+
             print("\nQuitting")
             break
+
+
 
 
 if __name__ == "__main__":
