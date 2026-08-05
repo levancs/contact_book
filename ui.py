@@ -17,7 +17,8 @@ def show_menu():
         "\nEnter 8 to delete phone number"
         "\nEnter 9 to add tag"
         "\nEnter 10 to show tags"
-        "\nEnter 11 to exit program"
+        "\nEnter 11 to assign tag"
+        "\nEnter 12 to exit program"
     )
 
 
@@ -72,7 +73,9 @@ def handle_result(result):
         "invalid_input": "Input cannot be empty",
         "duplicate_email": "Email already exists",
         "duplicate_tag": "Tag already exists",
+        "tag_already_assigned": "tag already assigned",
         "contact_not_found": "Contact wasn't found",
+        "contact_or_tag_not_found": "Contact/Tag wasn't found",
         "phone_number_not_found": "Phone number wasn't found"
     }
 

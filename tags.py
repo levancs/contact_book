@@ -21,6 +21,7 @@ def add_tag(name):
         return "duplicate_tag"
     return "success"     
 
+
 def get_tags():
     with get_connection() as connection:
         with connection.cursor() as cursor:
@@ -32,3 +33,21 @@ def get_tags():
             )
             tags = cursor.fetchall()
             return tags
+
+
+def assign_tag(contact_id, tag_id):
+    try:
+        with get_connection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute (
+                    """
+                    INSERT INTO contact_tags(contact_id, tag_id)
+                    VALUES (%s, %s)
+                    """,
+                    (contact_id, tag_id)
+                )
+    except psycopg.errors.ForeignKeyViolation:
+        return "contact_or_tag_not_found"
+    except psycopg.errors.UniqueViolation:
+        return "tag_already_assigned"
+    return "success"
