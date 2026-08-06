@@ -3,7 +3,7 @@ from contacts import (
     update_contact_name,
     update_contact_email,
     update_contact_name_email,
-    delete_contact
+    delete_contact,
 )
 from phone_numbers import (
     add_phone_number,
@@ -21,8 +21,10 @@ from ui import (
     show_contact_menu,
     show_phone_number_menu,
     show_tag_menu,
+    show_search_menu,
     display_contacts,
-    display_contacts_descriptive,
+    display_contacts_by_name,
+    display_contacts_by_email,
     display_phone_numbers,    
     display_phone_numbers_by_contact,
     display_tags,
@@ -40,7 +42,7 @@ def contact_menu():
 
         show_contact_menu()
         contact_menu_choice = input("\nEnter here: ")
-        if contact_menu_choice not in ('1', '2', '3', '4', '5', '6'):
+        if contact_menu_choice not in ('1', '2', '3', '4', '5'):
             print("Invalid contact menu input")
             continue
 
@@ -108,11 +110,6 @@ def contact_menu():
 
 
         elif contact_menu_choice == '5':
-
-            display_contacts_descriptive()
-
-
-        elif contact_menu_choice == '6':
 
             break
 
@@ -304,13 +301,42 @@ def tag_menu():
 
 
 
+def search_menu():
+
+    while True:
+        show_search_menu()
+        search_menu_choice = input("\nEnter here: ")
+        if search_menu_choice not in ('1', '2', '3', '4', '5'):
+            print("\nInvalid search menu choice")
+            continue
+
+
+        if search_menu_choice == '1':
+
+            name = input("\nEnter name to search for here: ")
+            display_contacts_by_name(name)
+
+
+        elif search_menu_choice == '2':
+
+            email = input("\nEnter email to search for here: ")
+            display_contacts_by_email(email)
+
+
+        elif search_menu_choice == '5':
+
+            break
+
+
+
+
 def menu():
 
     while True:
 
         show_main_menu()
         main_menu_choice = input("\nEnter here: ")
-        if main_menu_choice not in ('1', '2', '3', '4'):
+        if main_menu_choice not in ('1', '2', '3', '4', '5'):
             print("\nInvalid main menu input")
             continue
 
@@ -329,8 +355,11 @@ def menu():
 
             tag_menu()
 
-
         elif main_menu_choice == '4':
+
+            search_menu()
+
+        elif main_menu_choice == '5':
 
             print("\nQuitting")
             break

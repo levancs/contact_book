@@ -1,6 +1,7 @@
 from contacts import (
     get_contacts,
-    get_contacts_descriptive
+    get_contacts_by_name,
+    get_contacts_by_email,
 )
 from phone_numbers import (
     get_phone_numbers,
@@ -19,7 +20,8 @@ def show_main_menu():
         "\n1. Contact options"
         "\n2. Phone number options"
         "\n3. Tag options"
-        "\n4. Exit"
+        "\n4. Search options"
+        "\n5. Exit"
     )
 
 
@@ -30,8 +32,7 @@ def show_contact_menu():
         "\n2. Update contact"
         "\n3. Delete contact"
         "\n4. Show contacts"
-        "\n5. Show descriptive contacts"
-        "\n6. Go back"
+        "\n5. Go back"
     )
 
 
@@ -60,6 +61,17 @@ def show_tag_menu():
     )
 
 
+def show_search_menu():
+
+    print(
+        "\n1. Search contact by name"
+        "\n2. Search contact by email"
+        "\n3. Search contact by phone number"
+        "\n4. Search contact by tag"
+        "\n5. Go back"
+    )
+
+
 def display_contacts():
 
     contacts = get_contacts()
@@ -71,27 +83,52 @@ def display_contacts():
             f"\nContact ID: {contact[0]}"
             f"\nContact name: {contact[1]}"
             f"\nContact email: {contact[2]}"
+            f"\nPhone number ID: {contact[3]}"
+            f"\nPhone number: {contact[4]}"
+            f"\nPhone type: {contact[5]}"
+            f"\nTag ID: {contact[6]}"
+            f"\nTag name: {contact[7]}"
+        )
+
+
+def display_contacts_by_name(name):
+
+    contacts = get_contacts_by_name(name)
+    if not contacts:
+        print("\nNo contacts found")
+        return False
+    for contact in contacts:
+        print(
+            f"\nContact ID: {contact[0]}"
+            f"\nContact name: {contact[1]}"
+            f"\nContact email: {contact[2]}"
+            f"\nPhone number ID: {contact[3]}"
+            f"\nPhone number: {contact[4]}"
+            f"\nPhone type: {contact[5]}"
+            f"\nTag ID: {contact[6]}"
+            f"\nTag name: {contact[7]}"
         )
     return True
 
 
-def display_contacts_descriptive():
+def display_contacts_by_email(email):
 
-    descriptive_contacts = get_contacts_descriptive()
-    if not descriptive_contacts:
-        print("\nNo contacts")
+    contacts = get_contacts_by_email(email)
+    if not contacts:
+        print("\nNo contacts found")
         return False
-    for descriptive_contact in descriptive_contacts:
+    for contact in contacts:
         print(
-            f"\nContact ID: {descriptive_contact[0]}"
-            f"\nContact name: {descriptive_contact[1]}"
-            f"\nContact email: {descriptive_contact[2]}"
-            f"\nPhone number ID: {descriptive_contact[3]}"
-            f"\nPhone number: {descriptive_contact[4]}"
-            f"\nPhone type: {descriptive_contact[5]}"
-            f"\nTag ID: {descriptive_contact[6]}"
-            f"\nTag name: {descriptive_contact[7]}"
+            f"\nContact ID: {contact[0]}"
+            f"\nContact name: {contact[1]}"
+            f"\nContact email: {contact[2]}"
+            f"\nPhone number ID: {contact[3]}"
+            f"\nPhone number: {contact[4]}"
+            f"\nPhone type: {contact[5]}"
+            f"\nTag ID: {contact[6]}"
+            f"\nTag name: {contact[7]}"
         )
+    return True
 
 
 def display_phone_numbers():

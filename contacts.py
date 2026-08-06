@@ -28,19 +28,6 @@ def get_contacts():
         with connection.cursor() as cursor:
             cursor.execute(
                 """
-                SELECT contact_id, name, email 
-                FROM contacts;
-                """
-            )
-            contacts = cursor.fetchall()
-            return contacts
-
-
-def get_contacts_descriptive():
-    with get_connection() as connection:
-        with connection.cursor() as cursor:
-            cursor.execute(
-                """
                 SELECT
                     contacts.contact_id,
                     contacts.name,
@@ -134,3 +121,61 @@ def delete_contact(contact_id):
                 (contact_id,)
             )
             return "contact_not_found" if cursor.rowcount == 0 else "success"
+        
+
+def get_contacts_by_name(name):
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT
+                    contacts.contact_id,
+                    contacts.name,
+                    contacts.email,
+                    phone_numbers.phone_id,
+                    phone_numbers.number AS phone_number,
+                    phone_numbers.type AS phone_type,
+                    tags.tag_id,
+                    tags.name as tag_name
+                FROM contacts
+                LEFT JOIN phone_numbers
+                    ON contacts.contact_id = phone_numbers.contact_id
+                LEFT JOIN contact_tags
+                    ON contacts.contact_id = contact_tags.contact_id
+                LEFT JOIN tags
+                    ON contact_tags.tag_id = tags.tag_id
+                WHERE contacts.name ILIKE %s
+                """,
+                (name,)
+            )
+            contacts = cursor.fetchall()
+            return contacts
+
+
+def get_contacts_by_email(email):
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT
+                    contacts.contact_id,
+                    contacts.name,
+                    contacts.email,
+                    phone_numbers.phone_id,
+                    phone_numbers.number AS phone_number,
+                    phone_numbers.type AS phone_type,
+                    tags.tag_id,
+                    tags.name as tag_name
+                FROM contacts
+                LEFT JOIN phone_numbers
+                    ON contacts.contact_id = phone_numbers.contact_id
+                LEFT JOIN contact_tags
+                    ON contacts.contact_id = contact_tags.contact_id
+                LEFT JOIN tags
+                    ON contact_tags.tag_id = tags.tag_id
+                WHERE contacts.email ILIKE %s
+                """,
+                (email,)
+            )
+            contacts = cursor.fetchall()
+            return contacts
