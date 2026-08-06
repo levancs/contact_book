@@ -35,6 +35,23 @@ def get_tags():
             return tags
 
 
+def get_tags_for_contact(contact_id):
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute (
+                """
+                SELECT tags.tag_id, tags.name
+                FROM tags
+                INNER JOIN contact_tags
+                    ON tags.tag_id = contact_tags.tag_id
+                WHERE contact_tags.contact_id = %s
+                """,
+                (contact_id,)
+            )
+            tags = cursor.fetchall()
+            return tags
+
+
 def assign_tag(contact_id, tag_id):
     try:
         with get_connection() as connection:

@@ -25,6 +25,7 @@ from ui import (
     display_contacts_descriptive,    
     display_phone_numbers_by_contact,
     display_tags,
+    display_tags_by_contact,
     handle_result,
     get_id_input
 )
@@ -208,7 +209,7 @@ def tag_menu():
     while True:
         show_tag_menu()
         tag_menu_choice = input("\nEnter here: ")
-        if tag_menu_choice not in ('1', '2', '3', '4', '5', '6'):
+        if tag_menu_choice not in ('1', '2', '3', '4', '5', '6', '7'):
             print("\nInvalid tag menu choice")
             continue
 
@@ -279,6 +280,18 @@ def tag_menu():
 
 
         elif tag_menu_choice == '6':
+
+            if not display_contacts():
+                continue
+
+            contact_id = get_id_input("\nEnter contact ID to view tags for here: ")
+            if contact_id is None:
+                continue
+
+            display_tags_by_contact(contact_id)
+
+
+        elif tag_menu_choice == '7':
 
             break
 

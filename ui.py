@@ -3,7 +3,10 @@ from contacts import (
     get_contacts_descriptive
 )
 from phone_numbers import get_phone_numbers
-from tags import get_tags
+from tags import (
+    get_tags,
+    get_tags_for_contact
+)
 from utils import parse_integer
 
 
@@ -48,7 +51,8 @@ def show_tag_menu():
         "\n3. Delete tag"
         "\n4. Delete tag from contact"
         "\n5. Show tags"
-        "\n6. Go back"
+        "\n6. Show tags by contact"
+        "\n7. Go back"
     )
 
 
@@ -104,6 +108,20 @@ def display_phone_numbers_by_contact(contact_id):
 def display_tags():
 
     tags = get_tags()
+    if not tags:
+        print("\nNo tags")
+        return False
+    for tag in tags:
+        print(
+            f"\nTag ID: {tag[0]}"
+            f"\nName: {tag[1]}"
+        )
+    return True
+
+
+def display_tags_by_contact(contact_id):
+
+    tags = get_tags_for_contact(contact_id)
     if not tags:
         print("\nNo tags")
         return False
