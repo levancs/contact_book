@@ -25,7 +25,20 @@ def add_phone_number(contact_id, number, phone_type):
     return "success"
 
 
-def get_phone_numbers(contact_id):
+def get_phone_numbers():
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT phone_id, contact_id, number, type
+                FROM phone_numbers
+                """
+            )
+            phone_numbers = cursor.fetchall()
+            return phone_numbers
+
+
+def get_phone_numbers_for_contact(contact_id):
     with get_connection() as connection:
         with connection.cursor() as cursor:
             cursor.execute(

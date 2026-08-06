@@ -22,7 +22,8 @@ from ui import (
     show_phone_number_menu,
     show_tag_menu,
     display_contacts,
-    display_contacts_descriptive,    
+    display_contacts_descriptive,
+    display_phone_numbers,    
     display_phone_numbers_by_contact,
     display_tags,
     display_tags_by_contact,
@@ -123,7 +124,7 @@ def phone_number_menu():
     while True:
         show_phone_number_menu()
         phone_number_menu_choice = input("\nEnter here: ")
-        if phone_number_menu_choice not in ('1', '2', '3', '4', '5'):
+        if phone_number_menu_choice not in ('1', '2', '3', '4', '5', '6'):
             print("\nInvalid phone number menu input")
             continue
 
@@ -187,6 +188,11 @@ def phone_number_menu():
 
         elif phone_number_menu_choice == '4':
 
+            display_phone_numbers()
+
+
+        elif phone_number_menu_choice == '5':
+
             if not display_contacts():
                 continue
 
@@ -197,7 +203,7 @@ def phone_number_menu():
             display_phone_numbers_by_contact(contact_id)
 
 
-        elif phone_number_menu_choice == '5':
+        elif phone_number_menu_choice == '6':
 
             break
 

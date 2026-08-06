@@ -2,7 +2,10 @@ from contacts import (
     get_contacts,
     get_contacts_descriptive
 )
-from phone_numbers import get_phone_numbers
+from phone_numbers import (
+    get_phone_numbers,
+    get_phone_numbers_for_contact
+)
 from tags import (
     get_tags,
     get_tags_for_contact
@@ -38,8 +41,9 @@ def show_phone_number_menu():
         "\n1. Add phone number"
         "\n2. Update phone number"
         "\n3. Delete phone number"
-        "\n4. Show phone numbers by contact"
-        "\n5. Go back"
+        "\n4. Show phone numbers"
+        "\n5. Show phone numbers by contact"
+        "\n6. Go back"
     )
 
 
@@ -90,9 +94,25 @@ def display_contacts_descriptive():
         )
 
 
+def display_phone_numbers():
+
+    phone_numbers = get_phone_numbers()
+    if not phone_numbers:
+        print("\nNo phone numbers")
+        return False
+    for phone in phone_numbers:
+        print(
+            f"\nPhone number ID: {phone[0]}"
+            f"\nContact ID: {phone[1]}"
+            f"\nNumber: {phone[2]}"
+            f"\nType: {phone[3]}"
+        )
+    return True
+
+
 def display_phone_numbers_by_contact(contact_id):
 
-    phone_numbers = get_phone_numbers(contact_id)
+    phone_numbers = get_phone_numbers_for_contact(contact_id)
     if not phone_numbers:
         print("\nNo phone numbers")
         return False
