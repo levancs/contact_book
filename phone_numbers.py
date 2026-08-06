@@ -20,6 +20,8 @@ def add_phone_number(contact_id, number, phone_type):
                 )
     except psycopg.errors.ForeignKeyViolation:
         return "contact_not_found"
+    except psycopg.errors.UniqueViolation:
+        return "duplicate_phone_number"
     return "success"
 
 

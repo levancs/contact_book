@@ -1,4 +1,7 @@
-from contacts import get_contacts
+from contacts import (
+    get_contacts,
+    get_contacts_descriptive
+)
 from phone_numbers import get_phone_numbers
 from tags import get_tags
 from utils import parse_integer
@@ -21,7 +24,8 @@ def show_contact_menu():
         "\n2. Update contact"
         "\n3. Delete contact"
         "\n4. Show contacts"
-        "\n5. Go back"
+        "\n5. Show descriptive contacts"
+        "\n6. Go back"
     )
 
 
@@ -63,6 +67,25 @@ def display_contacts():
     return True
 
 
+def display_contacts_descriptive():
+
+    descriptive_contacts = get_contacts_descriptive()
+    if not descriptive_contacts:
+        print("\nNo contacts")
+        return False
+    for descriptive_contact in descriptive_contacts:
+        print(
+            f"\nContact ID: {descriptive_contact[0]}"
+            f"\nContact name: {descriptive_contact[1]}"
+            f"\nContact email: {descriptive_contact[2]}"
+            f"\nPhone number ID: {descriptive_contact[3]}"
+            f"\nPhone number: {descriptive_contact[4]}"
+            f"\nPhone type: {descriptive_contact[5]}"
+            f"\nTag ID: {descriptive_contact[6]}"
+            f"\nTag name: {descriptive_contact[7]}"
+        )
+
+
 def display_phone_numbers_by_contact(contact_id):
 
     phone_numbers = get_phone_numbers(contact_id)
@@ -99,6 +122,7 @@ def handle_result(result):
         "invalid_input": "Input cannot be empty",
 
         "duplicate_email": "Email already exists",
+        "duplicate_phone_number": "Phone number already exists",
         "duplicate_tag": "Tag already exists",
         "tag_already_assigned": "Tag already assigned",
         

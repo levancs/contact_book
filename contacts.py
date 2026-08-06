@@ -34,8 +34,35 @@ def get_contacts():
             )
             contacts = cursor.fetchall()
             return contacts
-  
 
+
+def get_contacts_descriptive():
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT
+                    contacts.contact_id,
+                    contacts.name,
+                    contacts.email,
+                    phone_numbers.phone_id,
+                    phone_numbers.number AS phone_number,
+                    phone_numbers.type AS phone_type,
+                    tags.tag_id,
+                    tags.name as tag_name
+                FROM contacts
+                LEFT JOIN phone_numbers
+                    ON contacts.contact_id = phone_numbers.contact_id
+                LEFT JOIN contact_tags
+                    ON contacts.contact_id = contact_tags.contact_id
+                LEFT JOIN tags
+                    ON contact_tags.tag_id = tags.tag_id
+                """
+            )
+            descriptive_contacts = cursor.fetchall()
+            return descriptive_contacts
+
+        
 def update_contact_name(contact_id, new_name):
     new_name = normalize_text(new_name)
     if new_name is None:
@@ -64,7 +91,7 @@ def update_contact_email(contact_id, new_email):
                     """
                     UPDATE contacts
                     SET email = %s
-                    WHERE contact_id = %s
+                     WHERE contact_id = %s
                     """,
                     (new_email, contact_id)
                 )

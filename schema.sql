@@ -9,7 +9,8 @@ CREATE TABLE phone_numbers (
     phone_id SERIAL PRIMARY KEY,
     contact_id INTEGER REFERENCES contacts(contact_id) ON DELETE CASCADE,
     number TEXT NOT NULL,
-    type TEXT NOT NULL
+    type TEXT NOT NULL,
+    UNIQUE(contact_id, number)
 );
 
 CREATE TABLE tags (
