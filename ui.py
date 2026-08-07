@@ -1,9 +1,5 @@
 from contacts import (
-    get_contacts,
-    get_contacts_by_name,
-    get_contacts_by_email,
-    get_contacts_by_phone_number,
-    get_contacts_by_tag
+    get_contacts
 )
 from phone_numbers import (
     get_phone_numbers,
@@ -81,93 +77,26 @@ def display_contacts():
         print("\nNo contacts")
         return False
     for contact in contacts:
+        phone_numbers = get_phone_numbers_for_contact(contact[0])
+        tags = get_tags_for_contact(contact[0])
+        if not phone_numbers:
+            phone_numbers_str = "No phone numbers"
+        else:
+            phone_numbers_str = "\n".join(
+                f"Phone number ID: {phone[0]}, Number: {phone[1]}, Type: {phone[2]}" for phone in phone_numbers
+            )
+        if not tags:
+            tags_str = "No tags"
+        else:
+            tags_str = "\n".join(
+                f"Tag ID: {tag[0]}, Name: {tag[1]}" for tag in tags
+            )
         print(
             f"\nContact ID: {contact[0]}"
             f"\nContact name: {contact[1]}"
             f"\nContact email: {contact[2]}"
-            f"\nPhone number ID: {contact[3]}"
-            f"\nPhone number: {contact[4]}"
-            f"\nPhone type: {contact[5]}"
-            f"\nTag ID: {contact[6]}"
-            f"\nTag name: {contact[7]}"
-        )
-
-
-def display_contacts_by_name(name):
-
-    contacts = get_contacts_by_name(name)
-    if not contacts:
-        print("\nNo contacts found")
-        return False
-    for contact in contacts:
-        print(
-            f"\nContact ID: {contact[0]}"
-            f"\nContact name: {contact[1]}"
-            f"\nContact email: {contact[2]}"
-            f"\nPhone number ID: {contact[3]}"
-            f"\nPhone number: {contact[4]}"
-            f"\nPhone type: {contact[5]}"
-            f"\nTag ID: {contact[6]}"
-            f"\nTag name: {contact[7]}"
-        )
-    return True
-
-
-def display_contacts_by_email(email):
-
-    contacts = get_contacts_by_email(email)
-    if not contacts:
-        print("\nNo contacts found")
-        return False
-    for contact in contacts:
-        print(
-            f"\nContact ID: {contact[0]}"
-            f"\nContact name: {contact[1]}"
-            f"\nContact email: {contact[2]}"
-            f"\nPhone number ID: {contact[3]}"
-            f"\nPhone number: {contact[4]}"
-            f"\nPhone type: {contact[5]}"
-            f"\nTag ID: {contact[6]}"
-            f"\nTag name: {contact[7]}"
-        )
-    return True
-
-
-def display_contacts_by_phone_number(phone_number):
-
-    contacts = get_contacts_by_phone_number(phone_number)
-    if not contacts:
-        print("\nNo contacts found")
-        return False
-    for contact in contacts:
-        print(
-            f"\nContact ID: {contact[0]}"
-            f"\nContact name: {contact[1]}"
-            f"\nContact email: {contact[2]}"
-            f"\nPhone number ID: {contact[3]}"
-            f"\nPhone number: {contact[4]}"
-            f"\nPhone type: {contact[5]}"
-            f"\nTag ID: {contact[6]}"
-            f"\nTag name: {contact[7]}"
-        )
-
-
-def display_contacts_by_tag(tag_name):
-
-    contacts = get_contacts_by_tag(tag_name)
-    if not contacts:
-        print("\nNo contacts found")
-        return False
-    for contact in contacts:
-        print(
-            f"\nContact ID: {contact[0]}"
-            f"\nContact name: {contact[1]}"
-            f"\nContact email: {contact[2]}"
-            f"\nPhone number ID: {contact[3]}"
-            f"\nPhone number: {contact[4]}"
-            f"\nPhone type: {contact[5]}"
-            f"\nTag ID: {contact[6]}"
-            f"\nTag name: {contact[7]}"
+            f"\nPhone numbers:\n{phone_numbers_str}"
+            f"\nTags:\n{tags_str}"
         )
     return True
 
