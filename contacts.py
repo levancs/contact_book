@@ -38,6 +38,42 @@ def get_contacts():
             contacts = cursor.fetchall()
             return contacts
 
+
+def get_contacts_by_name(name):
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT
+                    contact_id,
+                    name,
+                    email
+                FROM contacts
+                WHERE name ILIKE %s
+                """,
+                (name,)
+            )
+            contacts = cursor.fetchall()
+            return contacts      
+
+
+def get_contacts_by_email(email):
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT
+                    contact_id,
+                    name,
+                    email
+                FROM contacts
+                WHERE email ILIKE %s
+                """,
+                (email,)
+            )
+            contacts = cursor.fetchall()
+            return contacts  
+
         
 def update_contact_name(contact_id, new_name):
     new_name = normalize_text(new_name)

@@ -23,6 +23,8 @@ from ui import (
     show_tag_menu,
     show_search_menu,
     display_contacts,
+    display_contacts_by_name,
+    display_contacts_by_email,
     display_phone_numbers,    
     display_phone_numbers_by_contact,
     display_tags,
