@@ -74,6 +74,48 @@ def get_contacts_by_email(email):
             contacts = cursor.fetchall()
             return contacts  
 
+
+def get_contacts_by_phone_number(number):
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT DISTINCT
+                    contacts.contact_id,
+                    contacts.name,
+                    contacts.email
+                FROM contacts
+                INNER JOIN phone_numbers
+                    ON contacts.contact_id = phone_numbers.contact_id
+                WHERE phone_numbers.number ILIKE %s
+                """,
+                (number,)
+            )
+            contacts = cursor.fetchall()
+            return contacts
+
+
+def get_contacts_by_tag(name):
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT DISTINCT
+                    contacts.contact_id,
+                    contacts.name,
+                    contacts.email
+                FROM contacts
+                INNER JOIN contact_tags
+                    ON contacts.contact_id = contact_tags.contact_id
+                INNER JOIN tags
+                    ON contact_tags.tag_id = tags.tag_id
+                WHERE tags.name ILIKE %s
+                """,
+                (name,)
+            )
+            contacts = cursor.fetchall()
+            return contacts
+
         
 def update_contact_name(contact_id, new_name):
     new_name = normalize_text(new_name)

@@ -25,6 +25,8 @@ from ui import (
     display_contacts,
     display_contacts_by_name,
     display_contacts_by_email,
+    display_contacts_by_phone_number,
+    display_contacts_by_tag,
     display_phone_numbers,    
     display_phone_numbers_by_contact,
     display_tags,

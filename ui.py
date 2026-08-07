@@ -1,7 +1,9 @@
 from contacts import (
     get_contacts,
     get_contacts_by_name,
-    get_contacts_by_email
+    get_contacts_by_email,
+    get_contacts_by_phone_number,
+    get_contacts_by_tag
 )
 from phone_numbers import (
     get_phone_numbers,
@@ -165,6 +167,66 @@ def display_contacts_by_email(email):
     return True
 
 
+def display_contacts_by_phone_number(number):
+
+    contacts = get_contacts_by_phone_number(number)
+    if not contacts:
+        print("\nNo contacts with this phone number found")
+        return False
+    for contact in contacts:
+        phone_numbers  = get_phone_numbers_for_contact(contact[0])
+        tags = get_tags_for_contact(contact[0])
+        if not phone_numbers:
+            phone_numbers_str = "No phone numbers"
+        else:
+            phone_numbers_str = "\n".join(
+                f"Phone number ID: {phone[0]}, Number: {phone[1]}, Type: {phone[2]}" for phone in phone_numbers
+            )
+        if not tags:
+            tags_str = "No tags"
+        else:
+            tags_str = "\n".join(
+                f"Tag ID: {tag[0]}, Name: {tag[1]}" for tag in tags
+            )
+        print(
+            f"\nContact ID: {contact[0]}"
+            f"\nContact name: {contact[1]}"
+            f"\nContact email: {contact[2]}"
+            f"\nPhone numbers:\n{phone_numbers_str}"
+            f"\nTags:\n{tags_str}"
+        )
+    return True
+
+
+def display_contacts_by_tag(name):
+
+    contacts = get_contacts_by_tag(name)
+    if not contacts:
+        print("\nNo contacts with this tag found")
+        return False
+    for contact in contacts:
+        phone_numbers  = get_phone_numbers_for_contact(contact[0])
+        tags = get_tags_for_contact(contact[0])
+        if not phone_numbers:
+            phone_numbers_str = "No phone numbers"
+        else:
+            phone_numbers_str = "\n".join(
+                f"Phone number ID: {phone[0]}, Number: {phone[1]}, Type: {phone[2]}" for phone in phone_numbers
+            )
+        if not tags:
+            tags_str = "No tags"
+        else:
+            tags_str = "\n".join(
+                f"Tag ID: {tag[0]}, Name: {tag[1]}" for tag in tags
+            )
+        print(
+            f"\nContact ID: {contact[0]}"
+            f"\nContact name: {contact[1]}"
+            f"\nContact email: {contact[2]}"
+            f"\nPhone numbers:\n{phone_numbers_str}"
+            f"\nTags:\n{tags_str}"
+        )
+    return True
 
 
 def display_phone_numbers():
