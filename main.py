@@ -25,6 +25,8 @@ from ui import (
     display_contacts,
     display_contacts_by_name,
     display_contacts_by_email,
+    display_contacts_by_phone_number,
+    display_contacts_by_tag,
     display_phone_numbers,    
     display_phone_numbers_by_contact,
     display_tags,
@@ -321,6 +323,18 @@ def search_menu():
 
             email = input("\nEnter email to search for here: ")
             display_contacts_by_email(email)
+
+
+        elif search_menu_choice == '3':
+
+            phone_number = input("\nEnter phone number to search for here: ")
+            display_contacts_by_phone_number(phone_number)
+
+
+        elif search_menu_choice == '4':
+
+            tag_name = input("\nEnter tag name to search for here: ")
+            display_contacts_by_tag(tag_name)
 
 
         elif search_menu_choice == '5':

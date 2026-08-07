@@ -179,3 +179,61 @@ def get_contacts_by_email(email):
             )
             contacts = cursor.fetchall()
             return contacts
+
+
+def get_contacts_by_phone_number(number):
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT
+                    contacts.contact_id,
+                    contacts.name,
+                    contacts.email,
+                    phone_numbers.phone_id,
+                    phone_numbers.number AS phone_number,
+                    phone_numbers.type AS phone_type,
+                    tags.tag_id,
+                    tags.name AS tag_name
+                FROM contacts
+                LEFT JOIN phone_numbers
+                    ON contacts.contact_id = phone_numbers.contact_id
+                LEFT JOIN contact_tags
+                    ON contacts.contact_id = contact_tags.contact_id
+                LEFT JOIN tags
+                    ON contact_tags.tag_id = tags.tag_id
+                WHERE phone_numbers.number ILIKE %s
+                """,
+                (number,)
+            )
+            contacts = cursor.fetchall()
+            return contacts
+
+
+def get_contacts_by_tag(tag_name):
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT
+                    contacts.contact_id,
+                    contacts.name,
+                    contacts.email,
+                    phone_numbers.phone_id,
+                    phone_numbers.number AS phone_number,
+                    phone_numbers.type AS phone_type,
+                    tags.tag_id,
+                    tags.name AS tag_name
+                FROM contacts
+                LEFT JOIN phone_numbers
+                    ON contacts.contact_id = phone_numbers.contact_id
+                LEFT JOIN contact_tags
+                    ON contacts.contact_id = contact_tags.contact_id
+                LEFT JOIN tags
+                    ON contact_tags.tag_id = tags.tag_id
+                WHERE tags.name ILIKE %s
+                """,
+                (tag_name,)
+            )
+            contacts = cursor.fetchall()
+            return contacts
